@@ -17,6 +17,10 @@ from datetime import datetime as dt
 
 # Initializing the Camera device
 pygame.camera.init()
+cameras = pygame.camera.list_cameras()
+print "List of cameras %s" % cameras
+print "Using Webcam %s" % cameras[0]
+
 cam = pygame.camera.Camera("/dev/video0", (640, 480))
 home_dir = getenv('HOME')
 
@@ -37,7 +41,7 @@ def capture_image():
     cam.start()
     image = cam.get_image()
     pygame.image.save(image, file_name)
-    cam.stop()
+    
 
 
 '''
@@ -62,7 +66,9 @@ while True:
             data = int(float(data))
             if data <= RANGE:
                 capture_image()
+                
                 print data
+                cam.stop()
 
         except BaseException, be:
             '''
