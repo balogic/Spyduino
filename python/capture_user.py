@@ -1,10 +1,6 @@
 #! /usr/bin/env python
 
 # -*- coding: utf-8 -*-
-"""
-Author: Prasanna Venkadesh
-License: GPL V3
-"""
 
 import sys
 import serial
@@ -20,24 +16,26 @@ pygame.camera.init()
 cameras = pygame.camera.list_cameras()
 print "List of cameras %s" % cameras
 print "Using Webcam %s" % cameras[0]
-
 cam = pygame.camera.Camera("/dev/video0", (640, 480))
 home_dir = getenv('HOME')
 
 '''
 Adjust the value of this variable to set the distance
 for the sensor to detect intruders
+
 '''
+
 RANGE = 300
 
-
+# Managing the Camera device
 def capture_image():
+    
     '''
     Starts the camera, Captures the image, saves it & stops
+    
     '''
 
     file_name = home_dir + '/image_captured/image_' + str(dt.now()) + '.jpg'
-
     cam.start()
     image = cam.get_image()
     pygame.image.save(image, file_name)
@@ -46,12 +44,14 @@ def capture_image():
 
 '''
 Establishes a connection to Arduino board through serial interface
+
 '''
 arduino_board = serial.Serial(sys.argv[1], 9600)
 
 
 '''
 Enters an infite loop that runs until it receives Keyboard Interrupt
+
 '''
 while True:
     if arduino_board.inWaiting() > 0:
